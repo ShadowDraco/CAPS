@@ -6,6 +6,10 @@
 
 CAPS will simulate a delivery service where vendors (such a flower shops) will ship products using our delivery service and when our drivers deliver them, each vendor will be notified that their customers received what they purchased.
 
+## Phase 2 (LAB 12)
+
+Convert the event system to Socket IO Server, client, and vendor
+
 ### Resources
 
 - ![Lab 11 Whiteboard](assets/Lab11.png)
