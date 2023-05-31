@@ -1,18 +1,30 @@
 "use strict";
 const eventEmitter = require("../eventEmitter");
 
+const availablePackage = (payload) => {
+  eventEmitter.emit("PACKAGE AVAILABLE", payload);
+  eventEmitter.emit("event", "PACKAGE AVAILABLE", payload);
+};
+
 const packageAvailable = (payload) => {
   setTimeout(() => {
-    eventEmitter.emit("PACKAGE AVAILABLE", payload);
+    availablePackage(payload);
   }, 1000);
+};
+
+const deliveredMessage = (payload) => {
+  console.log("Thank you for your order, ", payload.customer, "!!");
 };
 
 const packageDelivered = (payload) => {
   setTimeout(() => {
-    console.log("Thank you for your order, ", payload.customer, "!!");
+    deliveredMessage(payload);
   }, 1000);
-
-  return "Thank you for your order, ", payload.customer, "!!";
 };
 
-module.exports = { packageAvailable, packageDelivered };
+module.exports = {
+  packageAvailable,
+  packageDelivered,
+  availablePackage,
+  deliveredMessage,
+};

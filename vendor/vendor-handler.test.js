@@ -1,7 +1,12 @@
 "use-strict";
 
 const eventEmitter = require("../eventEmitter");
-const { packageAvailable, packageDelivered } = require("./handler");
+const {
+  packageAvailable,
+  packageDelivered,
+  availablePackage,
+  deliveredMessage,
+} = require("./handler");
 const createOrder = require("../eventpool");
 
 // to mock, first require in (see above eventEmitter) they take it over with a mock
@@ -12,22 +17,40 @@ jest.mock("../eventEmitter.js", () => {
   };
 });
 
-describe.skip("Vendor", () => {
-  it("receives a package and says thank you when its delivered", () => {
+let consoleSpy;
+
+beforeAll(() => {
+  consoleSpy = jest.spyOn(console, "log").mockImplementation();
+});
+
+afterAll(() => {
+  consoleSpy.mockRestore();
+});
+
+describe("Vendor", () => {
+  it("receives a package", () => {
     const payload = createOrder();
 
-    packageAvailable(payload);
+    availablePackage(payload);
     expect(eventEmitter.emit).toHaveBeenCalledWith(
       "PACKAGE AVAILABLE",
       payload
     );
+    expect(eventEmitter.emit).toHaveBeenCalledWith(
+      "event",
+      "PACKAGE AVAILABLE",
+      payload
+    );
+  });
 
-    expect(
-      packageDelivered(payload).toEqual(
-        "Thank you for your order, ",
-        payload.customer,
-        "!!"
-      )
+  it("says thank you when package delivered", () => {
+    const payload = createOrder();
+
+    deliveredMessage(payload);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Thank you for your order, ",
+      payload.customer,
+      "!!"
     );
   });
 });
