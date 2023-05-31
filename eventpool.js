@@ -23,30 +23,14 @@ const CAPSLOOP = () => {
 eventEmitter.on("START", CAPSLOOP);
 
 //* Event logger */
-
-const EventLogger = (payload, name) => {
+eventEmitter.on("event", (eventName, payload) => {
   const event = {
-    event: name,
+    event: eventName,
     time: new Date(),
     payload: payload,
   };
 
   console.log("EVENT:", event);
-};
-
-eventEmitter.on("pickup", (payload) => EventLogger(payload, "pickup"));
-
-eventEmitter.on("PACKAGE AVAILABLE", (payload) =>
-  EventLogger(payload, "PACKAGE AVAILABLE")
-);
-
-eventEmitter.on("PACKAGE PICKUP", (payload) =>
-  EventLogger(payload, "PACKAGE PICKUP")
-);
-eventEmitter.on("IN TRANSIT", (payload) => EventLogger(payload, "IN TRANSIT"));
-
-eventEmitter.on("PACKAGE DELIVERED", (payload) =>
-  EventLogger(payload, "PACKAGE DELIVERED")
-);
+});
 
 module.exports = createOrder;
