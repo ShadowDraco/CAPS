@@ -3,16 +3,6 @@ const eventEmitter = require("./eventEmitter");
 
 const chance = require("chance").Chance();
 
-// create a new order to start the process
-const createOrder = () => {
-  return {
-    store: `${chance.word()}-flowers`,
-    orderId: chance.guid(),
-    customer: chance.name(),
-    address: chance.address(),
-  };
-};
-
 const CAPSLOOP = () => {
   eventEmitter.emit("pickup", createOrder());
   setTimeout(() => {
