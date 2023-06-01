@@ -8,8 +8,9 @@ CAPS will simulate a delivery service where vendors (such a flower shops) will s
 
 ## Phase 2 (LAB 12)
 
-Convert the event system to Socket IO Server, client, and vendor
+Convert the event system to Socket IO Server, that handles the events between vendors and drivers. In real time.
 
 ### Resources
 
 - ![Lab 11 Whiteboard](assets/Lab11.png)
+- ![Lab 12 Whiteboard](assets/Lab12.png)

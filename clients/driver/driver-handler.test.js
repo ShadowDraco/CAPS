@@ -1,16 +1,16 @@
 "use-strict";
 
-const eventEmitter = require("../eventEmitter");
+const socket = require("../socket");
+const createOrder = require("../createOrder");
 const {
   pickupPackage,
   deliverPackage,
   packagePickup,
   packageDeliver,
 } = require("./handler");
-const createOrder = require("../eventpool");
 
 // to mock, first require in (see above eventEmitter) they take it over with a mock
-jest.mock("../eventEmitter", () => {
+jest.mock("../socket.js", () => {
   return {
     on: jest.fn(),
     emit: jest.fn(),
@@ -31,13 +31,9 @@ describe("Driver", () => {
   it("receives a package to deliver", () => {
     const payload = createOrder();
 
-    packagePickup(payload);
-    expect(eventEmitter.emit).toHaveBeenCalledWith("PACKAGE PICKUP", payload);
-    expect(eventEmitter.emit).toHaveBeenCalledWith(
-      "event",
-      "PACKAGE PICKUP",
-      payload
-    );
+    packagePickup(payload, socket);
+    expect(socket.emit).toHaveBeenCalledWith("PACKAGE PICKUP", payload);
+    expect(socket.emit).toHaveBeenCalledWith("PACKAGE PICKUP", payload);
 
     expect(consoleSpy).toHaveBeenCalledWith(
       "DRIVER: picked up",
@@ -48,16 +44,9 @@ describe("Driver", () => {
   it("delivers the package", () => {
     const payload = createOrder();
 
-    packageDeliver(payload);
-    expect(eventEmitter.emit).toHaveBeenCalledWith(
-      "PACKAGE DELIVERED",
-      payload
-    );
-    expect(eventEmitter.emit).toHaveBeenCalledWith(
-      "event",
-      "PACKAGE DELIVERED",
-      payload
-    );
+    packageDeliver(payload, socket);
+    expect(socket.emit).toHaveBeenCalledWith("PACKAGE DELIVERED", payload);
+    expect(socket.emit).toHaveBeenCalledWith("PACKAGE DELIVERED", payload);
 
     expect(consoleSpy).toHaveBeenCalledWith(
       "DRIVER: delivered",

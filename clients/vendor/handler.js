@@ -1,24 +1,26 @@
-"use strict";
-const eventEmitter = require("../eventEmitter");
+"use-strict";
 
-const availablePackage = (payload) => {
-  eventEmitter.emit("PACKAGE AVAILABLE", payload);
-  eventEmitter.emit("event", "PACKAGE AVAILABLE", payload);
+//* Socket is included in all of these functions and is
+//* passed in from index so that new sockets aren't created
+//* between handler and index and connecting to server.
+
+const availablePackage = (payload, socket) => {
+  socket.emit("PACKAGE AVAILABLE", payload);
 };
 
-const packageAvailable = (payload) => {
+const packageAvailable = (payload, socket) => {
   setTimeout(() => {
-    availablePackage(payload);
+    availablePackage(payload, socket);
   }, 1000);
 };
 
-const deliveredMessage = (payload) => {
+const deliveredMessage = (payload, socket) => {
   console.log("Thank you for your order, ", payload.customer, "!!");
 };
 
-const packageDelivered = (payload) => {
+const packageDelivered = (payload, socket) => {
   setTimeout(() => {
-    deliveredMessage(payload);
+    deliveredMessage(payload, socket);
   }, 1000);
 };
 

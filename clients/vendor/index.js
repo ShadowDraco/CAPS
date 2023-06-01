@@ -1,7 +1,12 @@
 "use-strict";
-const eventEmitter = require("../eventEmitter");
+//? Create socket connection
+const { io } = require("socket.io-client");
+const socket = io("http://localhost:3001/caps");
+const createOrder = require("../createOrder");
+//? Join the vendors room
+socket.emit("JOIN", "vendors");
 
 const { packageAvailable, packageDelivered } = require("./handler");
 
-eventEmitter.on("pickup", packageAvailable);
-eventEmitter.on("PACKAGE DELIVERED", packageDelivered);
+socket.on("pickup", (payload) => packageAvailable(createOrder(), socket));
+socket.on("PACKAGE DELIVERED", (payload) => packageDelivered(payload, socket));
