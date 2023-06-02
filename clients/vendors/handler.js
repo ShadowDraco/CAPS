@@ -10,18 +10,23 @@ const availablePackage = (payload, socket) => {
 
 const packageAvailable = (payload, socket) => {
   setTimeout(() => {
+    payload.queueId = "PACKAGE AVAILABLE";
     availablePackage(payload, socket);
-  }, 1000);
+  }, 2000);
 };
 
-const deliveredMessage = (payload, socket) => {
-  console.log("Thank you for your order, ", payload.customer, "!!");
+const deliveredMessage = (payload, socket, store) => {
+  if (payload.store === store) {
+    console.log(store, ": Thank you for your order, ", payload.customer, "!!");
+  }
 };
 
-const packageDelivered = (payload, socket) => {
-  setTimeout(() => {
-    deliveredMessage(payload, socket);
-  }, 1000);
+const packageDelivered = (payload, socket, store) => {
+  if (store === payload.store) {
+    setTimeout(() => {
+      deliveredMessage(payload, socket, store);
+    }, 2000);
+  }
 };
 
 module.exports = {

@@ -1,8 +1,9 @@
 const chance = require("chance").Chance();
 // create a new order to start the process per vendor
-const createOrder = () => {
+const createOrder = (name) => {
   return {
-    store: `${chance.word()}-flowers`,
+    store: `${name}`,
+    queueId: "PACKAGE AVAILABLE",
     orderId: chance.guid(),
     customer: chance.name(),
     address: chance.address(),

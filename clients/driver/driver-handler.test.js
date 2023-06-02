@@ -1,6 +1,6 @@
 "use-strict";
 
-const socket = require("../socket");
+const socket = require("../test-socket");
 const createOrder = require("../createOrder");
 const {
   pickupPackage,
@@ -10,7 +10,7 @@ const {
 } = require("./handler");
 
 // to mock, first require in (see above eventEmitter) they take it over with a mock
-jest.mock("../socket.js", () => {
+jest.mock("../test-socket.js", () => {
   return {
     on: jest.fn(),
     emit: jest.fn(),
