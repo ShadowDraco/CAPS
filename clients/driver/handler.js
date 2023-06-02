@@ -14,9 +14,11 @@ const pickupPackage = (payload, socket) => {
 const packageDeliver = (payload, socket) => {
   console.log("DRIVER: delivered", payload.orderId);
   socket.emit("PACKAGE DELIVERED", payload);
+  socket.emit("RECEIVED", payload);
 };
 
 const deliverPackage = (payload, socket) => {
+  payload.queueId = "PACKAGE DELIVERED";
   setTimeout(() => {
     packageDeliver(payload, socket);
   }, 2000);

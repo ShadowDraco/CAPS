@@ -1,6 +1,6 @@
 "use-strict";
 
-const socket = require("../socket");
+const socket = require("../test-socket");
 const createOrder = require("../createOrder");
 
 const {
@@ -11,7 +11,7 @@ const {
 } = require("./handler");
 
 // to mock, first require in (see above eventEmitter) they take it over with a mock
-jest.mock("../socket.js", () => {
+jest.mock("../test-socket.js", () => {
   return {
     on: jest.fn(),
     emit: jest.fn(),
@@ -40,9 +40,10 @@ describe("Vendor", () => {
   it("says thank you when package delivered", () => {
     const payload = createOrder();
 
-    deliveredMessage(payload, socket);
+    deliveredMessage(payload, socket, payload.store);
     expect(consoleSpy).toHaveBeenCalledWith(
-      "Thank you for your order, ",
+      payload.store,
+      ": Thank you for your order, ",
       payload.customer,
       "!!"
     );

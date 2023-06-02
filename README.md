@@ -10,7 +10,12 @@ CAPS will simulate a delivery service where vendors (such a flower shops) will s
 
 Convert the event system to Socket IO Server, that handles the events between vendors and drivers. In real time.
 
+## CAPS Phase 3
+
+Complete work on a multi-day build of our delivery tracking system, adding queued delivery.
+
 ### Resources
 
 - ![Lab 11 Whiteboard](assets/Lab11.png)
 - ![Lab 12 Whiteboard](assets/Lab12.png)
+- ![LAB 13 Whiteboard](assets/Lab13.png)
